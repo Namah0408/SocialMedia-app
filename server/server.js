@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
-import userRoutes from "./routes/userRoutes.js";
+import userRoutes from "./routes/userRoutes.js";import postRoutes from "./routes/postRoutes.js";
 
 dotenv.config();
 
@@ -13,12 +13,18 @@ connectDB();
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: 'http://localhost:5173', // your Vite frontend
+    credentials: true,
+  })
+);
 app.use(express.json()); // Parse JSON request bodies
 
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/posts", postRoutes);
 
 // Root route
 app.get("/", (req, res) => {

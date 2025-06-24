@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import UserAvatar from "./UserAvatar";
+import React from "react";
 
 const UserCard = ({ user }) => {
   return (

@@ -1,3 +1,5 @@
+import React from "react";
+
 const UserAvatar = ({ src, size = "w-12 h-12", alt = "Avatar" }) => {
   return (
     <img
