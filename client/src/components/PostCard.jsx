@@ -1,10 +1,13 @@
 import UserAvatar from "./UserAvatar";
+import LikeButton from "./LikeButton";
+import CommentSection from "./CommentSection";
 import { useAuth } from "../context/AuthContext";
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 
 const PostCard = ({ post, onDelete }) => {
   const { token, user } = useAuth();
+  const [comments, setComments] = useState(post.comments || []);
 
   const handleDelete = async () => {
     try {
@@ -33,8 +36,15 @@ const PostCard = ({ post, onDelete }) => {
           </button>
         )}
       </div>
+
       <p className="text-gray-200">{post.content}</p>
-      <p className="text-xs text-gray-500 mt-2">{new Date(post.createdAt).toLocaleString()}</p>
+
+      <div className="flex items-center justify-between mt-3 text-sm">
+        <LikeButton postId={post._id} likes={post.likes} />
+        <span className="text-gray-400">{comments.length} comments</span>
+      </div>
+
+      <CommentSection postId={post._id} comments={comments} setComments={setComments} />
     </div>
   );
 };

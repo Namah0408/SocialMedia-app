@@ -24,11 +24,13 @@ const Home = () => {
     setPosts((prev) => prev.filter((p) => p._id !== postId));
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-6 max-w-2xl mx-auto">
-      <CreatePost onPostCreated={handlePostCreated} />
-      {posts.map((post) => (
-        <PostCard key={post._id} post={post} onDelete={handlePostDeleted} />
-      ))}
+    <div className="min-w-screen bg-gray-900">
+      <div className="min-h-screen bg-gray-900 text-white p-6 max-w-2xl mx-auto">
+        <CreatePost onPostCreated={handlePostCreated} />
+        {posts.map((post) => (
+          <PostCard key={post._id} post={post} onDelete={handlePostDeleted} />
+        ))}
+      </div>
     </div>
   );
 };
