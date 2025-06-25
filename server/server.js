@@ -4,6 +4,8 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";import postRoutes from "./routes/postRoutes.js";
+import path from "path";
+import { fileURLToPath } from "url";
 
 dotenv.config();
 
@@ -21,10 +23,15 @@ app.use(
 );
 app.use(express.json()); // Parse JSON request bodies
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+// ✅ This line allows accessing images like http://localhost:5000/uploads/filename.png
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
+
 
 // Root route
 app.get("/", (req, res) => {

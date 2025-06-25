@@ -1,4 +1,6 @@
 import User from "../models/User.js";
+import fs from "fs";
+import path from "path";
 
 // GET /api/users/:id
 export const getUserProfile = async (req, res) => {
@@ -76,5 +78,32 @@ export const unfollowUser = async (req, res) => {
     res.json({ message: "User unfollowed successfully" });
   } catch (err) {
     res.status(500).json({ message: "Unfollow failed", error: err.message });
+  }
+};
+
+// POST /api/users/:id/avatar
+export const uploadAvatar = async (req, res) => {
+  try {
+    const userId = req.params.id;
+
+    if (!req.file) {
+      return res.status(400).json({ message: "No file uploaded" });
+    }
+
+    const avatarPath = req.file.path.replace(/\\/g, "/"); // Windows fix
+
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { avatar: `/${avatarPath}` },
+      { new: true }
+    );
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(500).json({ message: "Avatar upload failed", error: err.message });
   }
 };
