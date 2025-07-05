@@ -6,7 +6,7 @@ import {
   uploadAvatar,
 } from "../controllers/userController.js";
 import authMiddleware from "../middleware/authMiddleware.js";
-import { upload } from "../middleware/uploadMiddleware.js"; // ✅ import here
+import { upload } from "../middleware/uploadMiddleware.js";
 
 const router = express.Router();
 
